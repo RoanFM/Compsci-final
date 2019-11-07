@@ -53,12 +53,12 @@ temp[temp==0] <- NA
 eating_squirrels<-temp %>% 
   drop_na() 
 
-paleating <- colorFactor(c("Red"), 
+paleating <- colorFactor(c("Purple"), 
                      domain = eating_squirrels$eating) 
 
 eating_map <- leaflet(eating_squirrels) %>% 
-  addProviderTiles(providers$CartoDB.DarkMatter) %>%
-  addCircleMarkers(lng = ~long, lat = ~lat, color = ~paleating(eating), stroke = FALSE, fillOpacity = 0.5, radius = 1.4) %>% 
+  addProviderTiles(providers$Stamen.Toner) %>% 
+  addCircleMarkers(lng = ~long, lat = ~lat, color = ~paleating(eating), stroke = FALSE, fillOpacity = 0.7, radius = 2) %>% 
   addLegend(pal = paleating, 
             values = ~eating, 
             opacity = 0.5, 
@@ -127,22 +127,27 @@ pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatas
 > Pizza in the U.S.
 
 ```{r message=FALSE, warning=FALSE}
-leaflet(data=pizza_barstool) %>% 
-  addTiles() %>% 
-  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", stroke = FALSE, fillOpacity = 0.5, radius = 2)
+leaflet(data=pizza_datafiniti) %>% 
+  addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
 ```
 
 ```{r message=FALSE, warning=FALSE}
-nyc_pizza <- pizza_barstool %>% 
-  filter(city == "New York")
+mn_pizza <- pizza_datafiniti %>% 
+  filter(province == "MN")
 ```
 
-> Pizza in the NYC
+> Pizza in the Minnesota
 
 ```{r message=FALSE, warning=FALSE}
-leaflet(data=nyc_pizza) %>% 
-  addProviderTiles(providers$CartoDB.DarkMatter) %>%
-  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", stroke = FALSE, fillOpacity = 0.5, radius = 2)
+
+palmn <- colorFactor(topo.colors(5), 
+                     domain = mn_pizza$price_range_max) 
+
+leaflet(data=mn_pizza) %>% 
+  addProviderTiles(providers$Stamen.Toner) %>% 
+  addMarkers(lng = ~longitude, lat = ~latitude, label = ~name,clusterOptions = markerClusterOptions())
+
 ```
 
 
