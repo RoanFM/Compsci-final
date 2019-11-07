@@ -98,12 +98,12 @@ vg_clean %>%
   theme_classic()
 
 top_20_avrplaytime_game <- vg_clean %>% 
-  select(game, average_playtime, price) %>% 
+  select(game, average_playtime, price, owners) %>% 
   arrange(desc(average_playtime)) %>% 
   head(20)
 
 top_20_avrplaytime_game %>% 
-  ggplot(aes(x=price, y=average_playtime,label=game))+
+  ggplot(aes(x=price, y=average_playtime,label=game, color = owners))+
   geom_point()+
   geom_text(family="STKaiti")+
   theme_classic()
@@ -111,6 +111,10 @@ top_20_avrplaytime_game %>%
 
 > This graph shows the relation between pices of games and average play times of games with top 20 average playtime
 
+```
+vg_clean %>% 
+  group_by(year, )
+```
 
 
 
