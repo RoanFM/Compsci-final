@@ -16,6 +16,7 @@ library(gplots)
 library(RColorBrewer) 
 library(sf) 
 library(leaflet)
+library(formattable)
 ```
 
 ## Dataset 1: nyc_squirrels 
@@ -40,7 +41,7 @@ dates<-nyc_squirrels %>%
 > This table shows the number of squirrels recorded in days in October, 2018
 
 ```{r message=FALSE}
-dates
+formattable(dates,align =c("c", "c"), list(`Indicator Name` = formatter("span", style =~style(color = "black",font.weight = "bold"))))
 ```
 
 ```{r message=FALSE}
