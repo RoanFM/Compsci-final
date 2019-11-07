@@ -25,7 +25,6 @@ library(formattable)
 
 ```{r message=FALSE}
 nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
-head(nyc_squirrels)
 ```
 
 > **Ideas:** we could find out the squirals habits like runnig, chasing, eating, e.t.c., and we can also find the specific differences among different specific locations in NYC.  
@@ -73,12 +72,6 @@ eating_map <- leaflet(eating_squirrels) %>%
 eating_map
 ```
 
-
-
-
-
-
-
 ## Dataset 2: Video Games
 > Data: 
 https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-07-30
@@ -104,14 +97,18 @@ vg_clean %>%
   geom_density() +
   theme_classic()
 
-top_ten_avrplaytime_game <- vg_clean %>% 
-  select(game, average_playtime) %>% 
+top_20_avrplaytime_game <- vg_clean %>% 
+  select(game, average_playtime, price) %>% 
   arrange(desc(average_playtime)) %>% 
-  top_n(10)
+  head(20)
 
-top_ten_avrplaytime_game
+top_20_avrplaytime_game %>% 
+  ggplot(aes(x=price, y=average_playtime,label=game))+
+  geom_point()+
+  geom_text(family="STKaiti")+
+  theme_classic()
 ```
-
+> This graph shows the relation between pices of games and average play times of games with top 20 average playtime
 
 
 
