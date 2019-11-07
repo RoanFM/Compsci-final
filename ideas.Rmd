@@ -111,10 +111,6 @@ top_20_avrplaytime_game %>%
 
 > This graph shows the relation between pices of games and average play times of games with top 20 average playtime
 
-```
-vg_clean %>% 
-  group_by(year, )
-```
 
 
 
