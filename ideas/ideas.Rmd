@@ -79,7 +79,7 @@ This dataset seems pretty interesting and straightforward
 
 ```{r message=FALSE}
 library(readr)
-video_games <- read_csv("~/Desktop/Compsci-final/video_games.csv")
+video_games <- read_csv("~/Desktop/Compsci-final/ideas/video_games.csv")
 
 video_games[video_games==0] <- NA
 vg_clean<-video_games %>% 
@@ -109,7 +109,7 @@ top_20_avrplaytime_game %>%
   theme_classic()
 ```
 
-> This graph shows the relation between pices of games and average play times of games with top 20 average playtime
+> This graph shows the relation between pices of games, average play times of games, and the number of owners of games with top 20 average playtime
 
 
 
