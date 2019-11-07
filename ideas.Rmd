@@ -23,13 +23,25 @@ video_games <- read_csv("~/Desktop/Compsci-final/video_games.csv")
 video_games[video_games==0] <- NA
 vg_clean<-video_games %>% 
   drop_na() 
-
-head(vg_clean)
 ```
 
 > Ideas:
 Video games
 
 > Graphs/Tables:
->>>>>>> 2761c02c293dd748b6f6f06b1c2aa237d2854fde
+
+```{r}
+vg_clean %>% 
+  ggplot(aes(x = price))+
+  geom_density() +
+  theme_classic()
+
+top_ten_avrplaytime_game <- vg_clean %>% 
+  select(game, average_playtime) %>% 
+  arrange(desc(average_playtime)) %>% 
+  top_n(10)
+
+top_ten_avrplaytime_game
+```
+
 

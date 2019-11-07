@@ -7,6 +7,10 @@ output:
 
 ```r
 library(readr)
+library(tidyverse)
+library(lubridate)
+library(skimr) 
+library(naniar) 
 ```
 
 > Data: 
@@ -17,26 +21,56 @@ This dataset seems pretty interesting and straightforward
 ```r
 library(readr)
 video_games <- read_csv("~/Desktop/Compsci-final/video_games.csv")
-head(video_games)
-```
 
-```
-## # A tibble: 6 x 10
-##   number game  release_date price owners developer publisher
-##    <dbl> <chr> <chr>        <dbl> <chr>  <chr>     <chr>    
-## 1      1 Half… Nov 16, 2004  9.99 10,00… Valve     Valve    
-## 2      3 Coun… Nov 1, 2004   9.99 10,00… Valve     Valve    
-## 3     21 Coun… Mar 1, 2004   9.99 10,00… Valve     Valve    
-## 4     47 Half… Nov 1, 2004   4.99 5,000… Valve     Valve    
-## 5     36 Half… Jun 1, 2004   9.99 2,000… Valve     Valve    
-## 6     52 CS2D  Dec 24, 2004 NA    1,000… Unreal S… Unreal S…
-## # … with 3 more variables: average_playtime <dbl>, median_playtime <dbl>,
-## #   metascore <dbl>
+video_games[video_games==0] <- NA
+vg_clean<-video_games %>% 
+  drop_na() 
 ```
 
 > Ideas:
 Video games
 
 > Graphs/Tables:
->>>>>>> 2761c02c293dd748b6f6f06b1c2aa237d2854fde
+
+
+```r
+vg_clean %>% 
+  ggplot(aes(x = price))+
+  geom_density() +
+  theme_classic()
+```
+
+![](ideas_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+```r
+top_ten_avrplaytime_game <- vg_clean %>% 
+  select(game, average_playtime) %>% 
+  arrange(desc(average_playtime)) %>% 
+  top_n(10)
+```
+
+```
+## Selecting by average_playtime
+```
+
+```r
+top_ten_avrplaytime_game
+```
+
+```
+## # A tibble: 10 x 2
+##    game                                           average_playtime
+##    <chr>                                                     <dbl>
+##  1 FINAL FANTASY XIV Online                                   4461
+##  2 Alan Wake                                                  4106
+##  3 Nioh: Complete Edition / 仁王 Complete Edition             2904
+##  4 A Story About My Uncle                                     2830
+##  5 Battle Brothers                                            2464
+##  6 The Descendant                                             2313
+##  7 Football Manager 2019                                      2220
+##  8 The Sims 3                                                 2156
+##  9 Muv-Luv Alternative                                        2079
+## 10 HITMAN 2                                                   2053
+```
+
 
