@@ -73,7 +73,7 @@ eating_map
 ```
 
 ## Dataset 2: Video Games
-> Data: 
+> *Data:* 
 https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-07-30
 This dataset seems pretty interesting and straightforward
 
