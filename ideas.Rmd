@@ -4,13 +4,23 @@ output:
   html_document:
     keep_md: yes
 ---
+```{r message=FALSE}
+library(readr)
+```
 
 > Data: 
 https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-07-30
 This dataset seems pretty interesting and straightforward
+
+```{r message=FALSE}
+library(readr)
+video_games <- read_csv("~/Desktop/Compsci-final/video_games.csv")
+head(video_games)
+```
 
 > Ideas:
 Video games
 
 > Graphs/Tables:
 >>>>>>> 2761c02c293dd748b6f6f06b1c2aa237d2854fde
+

@@ -366,9 +366,24 @@ summary {
 </div>
 
 
+<pre class="r"><code>library(readr)</code></pre>
 <blockquote>
 <p>Data: <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-07-30" class="uri">https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-07-30</a> This dataset seems pretty interesting and straightforward</p>
 </blockquote>
+<pre class="r"><code>library(readr)
+video_games &lt;- read_csv(&quot;~/Desktop/Compsci-final/video_games.csv&quot;)
+head(video_games)</code></pre>
+<pre><code>## # A tibble: 6 x 10
+##   number game  release_date price owners developer publisher
+##    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;    
+## 1      1 Half… Nov 16, 2004  9.99 10,00… Valve     Valve    
+## 2      3 Coun… Nov 1, 2004   9.99 10,00… Valve     Valve    
+## 3     21 Coun… Mar 1, 2004   9.99 10,00… Valve     Valve    
+## 4     47 Half… Nov 1, 2004   4.99 5,000… Valve     Valve    
+## 5     36 Half… Jun 1, 2004   9.99 2,000… Valve     Valve    
+## 6     52 CS2D  Dec 24, 2004 NA    1,000… Unreal S… Unreal S…
+## # … with 3 more variables: average_playtime &lt;dbl&gt;, median_playtime &lt;dbl&gt;,
+## #   metascore &lt;dbl&gt;</code></pre>
 <blockquote>
 <p>Ideas: Video games</p>
 </blockquote>
