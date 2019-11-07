@@ -6,6 +6,10 @@ output:
 ---
 ```{r message=FALSE}
 library(readr)
+library(tidyverse)
+library(lubridate)
+library(skimr) 
+library(naniar) 
 ```
 
 > Data: 
@@ -15,7 +19,12 @@ This dataset seems pretty interesting and straightforward
 ```{r message=FALSE}
 library(readr)
 video_games <- read_csv("~/Desktop/Compsci-final/video_games.csv")
-head(video_games)
+
+video_games[video_games==0] <- NA
+vg_clean<-video_games %>% 
+  drop_na() 
+
+head(vg_clean)
 ```
 
 > Ideas:
