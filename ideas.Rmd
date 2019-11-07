@@ -108,6 +108,7 @@ top_20_avrplaytime_game %>%
   geom_text(family="STKaiti")+
   theme_classic()
 ```
+
 > This graph shows the relation between pices of games and average play times of games with top 20 average playtime
 
 
