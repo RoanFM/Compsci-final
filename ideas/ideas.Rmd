@@ -19,57 +19,10 @@ library(leaflet)
 library(formattable)
 ```
 
-## Dataset 1: nyc_squirrels 
+## Dataset 1: Board Games
 
-> **Dataset**:
-
-```{r message=FALSE}
-nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
-```
-
-> **Ideas:** we could find out the squirals habits like runnig, chasing, eating, e.t.c., and we can also find the specific differences among different specific locations in NYC.  
-
-> **Graph and Table**
-
-```{r message=FALSE}
-dates<-nyc_squirrels %>% 
-  group_by(date) %>% 
-  summarise(num = n())
-```
-
-> This table shows the number of squirrels recorded in days in October, 2018
-
-```{r message=FALSE}
-formattable(dates,align =c("c", "c"), list(`Indicator Name` = formatter("span", style =~style(color = "black",font.weight = "bold"))))
-```
-
-```{r message=FALSE}
-temp <- nyc_squirrels %>% 
-  select(lat, long, eating) %>% 
-  group_by(lat, long) %>% 
-  summarise(eating = sum(eating))
-
-temp[temp==0] <- NA
-eating_squirrels<-temp %>% 
-  drop_na() 
-
-paleating <- colorFactor(c("Purple"), 
-                     domain = eating_squirrels$eating) 
-
-eating_map <- leaflet(eating_squirrels) %>% 
-  addProviderTiles(providers$Stamen.Toner) %>% 
-  addCircleMarkers(lng = ~long, lat = ~lat, color = ~paleating(eating), stroke = FALSE, fillOpacity = 0.7, radius = 2) %>% 
-  addLegend(pal = paleating, 
-            values = ~eating, 
-            opacity = 0.5, 
-            title = NULL,
-            position = "bottomright") 
-```
-
-> This map shows all places that squirals have eaten at on some days in October, 2018.
-
-```{r}
-eating_map
+```{r message=FALSE, warning=FALSE}
+board_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
 ```
 
 ## Dataset 2: Video Games
