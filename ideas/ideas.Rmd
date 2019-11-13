@@ -172,7 +172,11 @@ pizza_never <- pizza_jared %>%
   mutate(p = sum_votes/sum_total)
 
 # create pizza rating data frame
-pizza_rating <- rbind(pizza_excerllent, pizza_good, pizza_average, pizza_poor, pizza_never)
+pizza_rating <- rbind(pizza_excerllent, pizza_good, pizza_average, pizza_poor, pizza_never) %>% 
+  mutate(date = as_datetime(time)) %>% 
+  mutate(year=year(date)) %>% 
+  group_by(place, year, answer) %>% 
+  mutate(year_avr_rate = mean(p))
 ```
 ```{r}
 # Top ten highest Excerllent rate 
