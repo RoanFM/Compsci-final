@@ -133,10 +133,6 @@ mn_pizza <- pizza_datafiniti %>%
 > Pizza in the Minnesota
 
 ```{r message=FALSE, warning=FALSE}
-
-palmn <- colorFactor(topo.colors(5), 
-                     domain = mn_pizza$price_range_max) 
-
 leaflet(data=mn_pizza) %>% 
   addProviderTiles(providers$Stamen.Toner) %>% 
   addMarkers(lng = ~longitude, lat = ~latitude, label = ~name,clusterOptions = markerClusterOptions())
@@ -180,12 +176,15 @@ pizza_rating <- rbind(pizza_excerllent, pizza_good, pizza_average, pizza_poor, p
 ```
 ```{r}
 # Top ten highest Excerllent rate 
-pizza_rating %>% 
+top_ten_excerllent<-pizza_rating %>% 
   filter(answer=="Excellent") %>% 
   group_by(place) %>% 
   summarise(rate = sum(p)/n()) %>% 
   arrange(desc(rate)) %>% 
-  head(10) %>% 
+  head(10) 
+
+# Graph
+top_ten_excerllent %>% 
   inner_join(pizza_rating, by="place") %>% 
   ggplot(aes(x=answer, y=percent, fill=place))+
   geom_bar(stat='identity',position='dodge')+
