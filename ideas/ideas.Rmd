@@ -24,7 +24,18 @@ library(formattable)
 ```{r message=FALSE, warning=FALSE}
 board_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
 ```
-
+```{r}
+board_games %>%
+  group_by(year_published) %>% 
+  summarise(num_published = n()) %>% 
+  ggplot(aes(x=year_published, y=num_published))+
+  geom_line()+
+  theme_classic()
+```
+```{r}
+board_games %>% 
+  group_by()
+```
 ## Dataset 2: Video Games
 > *Data:* 
 https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-07-30
