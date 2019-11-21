@@ -211,8 +211,15 @@ city_average_score <- pizza_barstool %>%
 
 ```{r}
 pizza_barstool %>% 
-  ggplot(aes(x=price_level, y=review_stats_all_average_score))+
-  geom_point()+
-  theme_classic()
+  ggplot(aes(x=as.character(price_level), y=review_stats_all_average_score, fill = as.character(price_level)))+
+  geom_boxplot()+
+  theme_classic()+
+  theme(legend.position="none")
+
+```
+
+
+```{r}
+glimpse(pizza_barstool)
 ```
 
