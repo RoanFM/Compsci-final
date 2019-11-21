@@ -40,13 +40,10 @@ pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatas
 
 ### **Pizza in the U.S.**
 
-
-
-
 ```{r}
 glimpse(pizza_datafiniti)
 ```
-```{r message=FALSE, warning=FALSE}
+```{r}
 leaflet(data=pizza_datafiniti) %>% 
   addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
   addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
@@ -70,14 +67,14 @@ pizza_datafiniti %>%
   labs(title = "Top 10 Cities for Pizza") 
 ```
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 nyc_pizza <- pizza_datafiniti %>% 
   filter(city == "New York")
 ```
 
 ### **Pizza in the NYC**
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 leaflet(data=nyc_pizza) %>% 
   addProviderTiles(providers$Stamen.Toner) %>% 
   addMarkers(lng = ~longitude, lat = ~latitude, label = ~name,clusterOptions = markerClusterOptions())
@@ -92,7 +89,7 @@ pizza_jared<-pizza_jared %>%
 glimpse(pizza_jared)
 ```
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 # sum the total votes and rate
 pizza_excellent <- pizza_jared %>% 
   filter(answer=="Excellent") %>% 
@@ -184,3 +181,19 @@ top_ten_excellent_analysis %>%
   xlab("Place")+
   labs(title = "Evaluation for Top 10 Pizza Place")
 ```
+
+```{r}
+glimpse(pizza_barstool)
+```
+
+```{r}
+city_average_score <- pizza_barstool %>% 
+  group_by(city) %>% 
+  summarise(city_average_score = sum(review_stats_all_average_score)/n()) 
+```
+
+
+```{r}
+
+```
+
