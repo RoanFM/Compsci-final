@@ -58,9 +58,9 @@ pizza_datafiniti %>%
   ggplot(aes(x=city, y=n,fill=city))+
   geom_col()+
   coord_flip()+
-  theme_classic()+
+  theme_minimal()+
   theme(legend.position="none")+
-  labs(title = "Most Popular Cities for Pizza") 
+  labs(title = "Top 10 Cities for Pizza") 
 ```
 
 ```{r message=FALSE, warning=FALSE}
