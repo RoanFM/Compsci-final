@@ -28,17 +28,18 @@ library(shiny)
 ```{r message=FALSE, warning=FALSE}
 # Read Data
 pizza_jared <- readr::read_csv("https://raw.githubusercontent.com/RoanFM/Compsci-final/master/Data/pizza_jared.csv") %>% 
-  unique()
+  unique() 
 pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_barstool.csv") %>% 
   unique()
 pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_datafiniti.csv") %>% 
   unique()
 ```
 
-> **Graphs/Tables**
+> **Pizza in the U.S.**
 
-> Pizza in the U.S.
-
+```{r}
+glimpse(pizza_datafiniti)
+```
 ```{r message=FALSE, warning=FALSE}
 leaflet(data=pizza_datafiniti) %>% 
   addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
@@ -46,7 +47,7 @@ leaflet(data=pizza_datafiniti) %>%
 ```
 
 
-> Most popular pizza place
+> **Most popular pizza place**
 
 ```{r}
 pizza_datafiniti %>% 
@@ -68,13 +69,21 @@ nyc_pizza <- pizza_datafiniti %>%
   filter(city == "New York")
 ```
 
-> Pizza in the NYC
+> **Pizza in the NYC**
 
 ```{r message=FALSE, warning=FALSE}
 leaflet(data=nyc_pizza) %>% 
   addProviderTiles(providers$Stamen.Toner) %>% 
   addMarkers(lng = ~longitude, lat = ~latitude, label = ~name,clusterOptions = markerClusterOptions())
+```
 
+> **Pizza Evaluation**
+
+```{r}
+glimpse(pizza_jared)
+pizza_jared<-pizza_jared %>% 
+  mutate(date = as_datetime(time)) 
+glimpse(pizza_jared)
 ```
 
 ```{r message=FALSE, warning=FALSE}
@@ -111,7 +120,6 @@ pizza_never <- pizza_jared %>%
 
 # create pizza rating data frame
 pizza_rating <- rbind(pizza_excellent, pizza_good, pizza_average, pizza_poor, pizza_never) %>% 
-  mutate(date = as_datetime(time)) %>% 
   mutate(year=year(date)) %>% 
   group_by(place, year, answer) %>% 
   mutate(year_avr_rate = mean(p)) 
@@ -167,5 +175,6 @@ top_ten_excellent_analysis %>%
   scale_fill_manual("legend", values = c("darkorchid2","dodgerblue2","darkgoldenrod1","cyan3","brown3"))+
   theme_classic()+
   theme(axis.text.x = element_text(angle=45, hjust=1))+
-  xlab("Place")
+  xlab("Place")+
+  labs(title = "Evaluation for Top 10 Pizza Place")
 ```
