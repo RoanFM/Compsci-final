@@ -7,7 +7,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 ```
 
 ```{r message=FALSE}
@@ -27,9 +27,7 @@ library(shiny)
 
 ## Dataset: Pizza Party
 
-> **Data:**
-
-```{r message=FALSE, warning=FALSE}
+```{r}
 # Read Data
 pizza_jared <- readr::read_csv("https://raw.githubusercontent.com/RoanFM/Compsci-final/master/Data/pizza_jared.csv") %>% 
   unique() 
@@ -39,7 +37,11 @@ pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatas
   unique()
 ```
 
-> **Pizza in the U.S.**
+
+### **Pizza in the U.S.**
+
+
+
 
 ```{r}
 glimpse(pizza_datafiniti)
@@ -51,7 +53,7 @@ leaflet(data=pizza_datafiniti) %>%
 ```
 
 
-> **Most popular pizza place**
+### **Most popular pizza place**
 
 ```{r}
 pizza_datafiniti %>% 
@@ -73,7 +75,7 @@ nyc_pizza <- pizza_datafiniti %>%
   filter(city == "New York")
 ```
 
-> **Pizza in the NYC**
+### **Pizza in the NYC**
 
 ```{r message=FALSE, warning=FALSE}
 leaflet(data=nyc_pizza) %>% 
@@ -81,7 +83,7 @@ leaflet(data=nyc_pizza) %>%
   addMarkers(lng = ~longitude, lat = ~latitude, label = ~name,clusterOptions = markerClusterOptions())
 ```
 
-> **Pizza Evaluation**
+### **Pizza Evaluation**
 
 ```{r}
 glimpse(pizza_jared)
