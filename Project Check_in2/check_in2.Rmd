@@ -45,12 +45,30 @@ leaflet(data=pizza_datafiniti) %>%
   addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
 ```
 
+
+> Most popular pizza place
+
+```{r}
+pizza_datafiniti %>% 
+  group_by(city) %>% 
+  summarise(n = n()) %>%
+  mutate(city = fct_reorder(city, n)) %>% 
+  arrange(desc(n)) %>% 
+  head(10) %>% 
+  ggplot(aes(x=city, y=n,fill=city))+
+  geom_col()+
+  coord_flip()+
+  theme_classic()+
+  theme(legend.position="none")+
+  labs(title = "Most Popular Cities for Pizza") 
+```
+
 ```{r message=FALSE, warning=FALSE}
 nyc_pizza <- pizza_datafiniti %>% 
   filter(city == "New York")
 ```
 
-> Pizza in the Minnesota
+> Pizza in the NYC
 
 ```{r message=FALSE, warning=FALSE}
 leaflet(data=nyc_pizza) %>% 
