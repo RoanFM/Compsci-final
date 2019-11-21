@@ -10,6 +10,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 ```
 
+
 ```{r message=FALSE}
 library(readr)
 library(tidyverse)
@@ -40,6 +41,9 @@ pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatas
 
 ### **Pizza in the U.S.**
 
+> Here we didn't do any analysis, we simply created an interactive map that shows every (non-chain) pizza place in the US. 
+
+
 ```{r}
 glimpse(pizza_datafiniti)
 ```
@@ -51,6 +55,9 @@ leaflet(data=pizza_datafiniti) %>%
 
 
 ### **Most popular pizza place**
+
+>Then we wondered which cities had the most pizza places. Not surprisingly, Manhatten and Brooklyn were well on top. 
+
 
 ```{r}
 pizza_datafiniti %>% 
@@ -73,6 +80,9 @@ nyc_pizza <- pizza_datafiniti %>%
 ```
 
 ### **Pizza in the NYC**
+
+>Then we focused our analysis on Manhatten, and created a more detailed map of pizza places in Manhatten. 
+
 
 ```{r}
 leaflet(data=nyc_pizza) %>% 
@@ -181,6 +191,12 @@ top_ten_excellent_analysis %>%
   xlab("Place")+
   labs(title = "Evaluation for Top 10 Pizza Place")
 ```
+
+##Best Pizza in New York
+
+> Our data came with ratings for various pizza places. We wanted to find the best pizza places in New York based off this. However, we didn't just want to calculate the average rating because we think an extreme rating can be more telling. As a result, we calculated the proportion of all ratings among the overall reviews and sorted by the highest proportion of reviews rating the pizzerias as "excellent". Of those ten, only Little Italy Pizza had reviewers who said they would never go back and four had no "poor" ratings either. Patsy's pizza (which I used to order as a kid!) was the winner with 2/3rds of reviewers calling its pizza "excellent". 
+
+
 
 ```{r}
 glimpse(pizza_barstool)
