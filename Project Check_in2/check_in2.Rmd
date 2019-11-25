@@ -58,7 +58,7 @@ leaflet(data=pizza_datafiniti) %>%
 ```
 
 
-### **Most popular pizza place**
+### **Most popular pizza places**
 
 #### Then we wondered which cities had the most pizza places. Not surprisingly, New York City were well on top. 
 
@@ -75,7 +75,8 @@ pizza_datafiniti %>%
   coord_flip()+
   theme_minimal()+
   theme(legend.position="none")+
-  labs(title = "Top 10 Cities for Pizza") 
+  ylab("Number of Pizza Places")+
+  labs(title = "Top 10 Cities for Pizza")
 ```
 
 ```{r}
