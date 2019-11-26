@@ -255,7 +255,7 @@ pizza_barstool %>%
 
 <br />
 
-#### Incidentally, we compared the average review socres among NYC, Brooklyn, and Minneapolis.
+#### Incidentally, we compared the average review socres among NYC, Brooklyn, Boston, and Minneapolis.
 
 <br />
 
