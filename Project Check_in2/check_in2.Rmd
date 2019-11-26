@@ -256,7 +256,9 @@ pizza_barstool %>%
 <br />
 
 #### Incidentally, we compared the average review socres among NYC, Brooklyn, and Minneapolis.
+
 <br />
+
 ```{r, results='hide'}
 pizza_barstool %>% 
   filter(city == c("New York", "Brooklyn", "Minneapolis", "Boston")) %>% 
