@@ -1,6 +1,6 @@
 ---
 title: "Pizza Places in NYC"
-author: "Charles Zhang, Roan Floer-Martinez, Jinghan Zhou, Xi Feng"
+author: "Charles Zhang, Roan Floer-Martinez, Xi Feng, Jinghan Zhou"
 output: 
   html_document:
     keep_md: yes
