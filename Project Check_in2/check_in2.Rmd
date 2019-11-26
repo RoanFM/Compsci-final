@@ -245,7 +245,7 @@ pizza_barstool %>%
   ggplot(aes(x=score))+
   geom_histogram(aes(fill=category), alpha = 0.4)+
   geom_density(aes(y=..density..*count, color = category), position='dodge', alpha = 0, size= 1)+
-  theme_classic()+
+  theme_minimal()+
   facet_wrap(~category)+
   theme(legend.position="none")+
   labs(title = "Average Rating Scores")
@@ -263,11 +263,13 @@ pizza_barstool %>%
 pizza_barstool %>% 
   filter(city == c("New York", "Brooklyn", "Minneapolis", "Boston")) %>% 
   ggplot(aes(x=review_stats_all_average_score))+
-  geom_histogram()+
-  theme_classic()+
+  geom_histogram(aes(fill = city))+
+  theme_minimal()+
   facet_wrap(~city)+
   theme(legend.position="none")+
-  labs(title = "Average Rating Scores")
+  labs(title = "Average Rating Scores")+
+  xlim(0,10)+
+  xlab("Average Review Rating Score")
 ```
 
 > This plot implies that we have more significant distrubution for the average rating socre in New York. This is also the reason why we choose to use pizzeria in NYC 
