@@ -24,6 +24,7 @@ library(sf)
 library(leaflet)
 library(formattable)
 library(shiny)
+library(plotly)
 ```
 
 
@@ -278,7 +279,7 @@ pizza_barstool %>%
 
 ```{r}
 pizza_barstool %>% 
-  ggplot(aes(x=review_stats_all_average_score, y = review_stats_dave_average_score))+
+  ggplot(aes(x=review_stats_all_average_score, y = review_stats_dave_average_score, label=place))+
   geom_point()+
   geom_smooth()+
   theme_minimal()
