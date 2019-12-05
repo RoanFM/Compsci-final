@@ -189,17 +189,20 @@ top_ten_excellent_analysis <- top_ten_excellent %>%
   inner_join(top_exe_avr,by = "place") %>% 
   inner_join(top_exe_poor,by = "place") %>% 
   inner_join(top_exe_never,by = "place") %>% 
-  pivot_longer(cols= -place,names_to = "Answers",values_to = "Proportion")
+  pivot_longer(cols= -place,names_to = "Answers",values_to = "Proportion") 
+
 ```
 
 #### Our data came with ratings for various pizza places. We wanted to find the best pizza places in New York based off this. However, we didn't just want to calculate the average rating because we think an extreme rating can be more telling. As a result, we calculated the proportion of all ratings among the overall reviews and sorted by the highest proportion of reviews rating the pizzerias as "excellent". Of those ten, only Little Italy Pizza had reviewers who said they would never go back and four had no "poor" ratings either. Patsy's pizza (which I used to order as a kid!) was the winner with 2/3rds of reviewers calling its pizza "excellent". 
-
+```{r}
+top_ten_excellent_analysis
+```
 ```{r, fig.width=8}
 # Graph
 top_ten_excellent_analysis %>% 
   ggplot(aes(x=place, y=Proportion, fill=Answers))+
   geom_bar(stat='identity')+
-  scale_fill_manual("legend", values = c("red","salmon","pink","steelblue1","steelblue4"), label = c("Excellent","Good","Average","Poor","Never Again"))+
+  scale_fill_manual("legend", values = c("red","salmon","pink","steelblue1","steelblue4"), label = c("Never Again","Poor","Average","Goodd","Excellent"))+
   theme_classic()+
   theme(axis.text.x = element_text(angle=45, hjust=1))+
   xlab("Place")+
