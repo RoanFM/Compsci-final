@@ -297,7 +297,6 @@ a<-pizza_barstool %>%
 ggplotly(a)
 
 
-
 b<-pizza_barstool %>% 
   mutate(top_ten = ifelse(name %in% pizza_names, "yes", "no")) %>% 
   filter(review_stats_all_average_score!=0, review_stats_community_average_score!=0) %>% 
