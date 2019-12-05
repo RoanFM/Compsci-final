@@ -277,10 +277,20 @@ pizza_barstool %>%
 
 > This plot implies that we have more significant distrubution for the average rating socre in New York. This is also the reason why we choose to use pizzeria in NYC 
 
+
+
+```{r}
+pizza_names <-
+  top_ten_excellent %>% 
+  pull(place)
+```
+
+
 ```{r}
 a<-pizza_barstool %>% 
+  mutate(top_ten = ifelse(name %in% pizza_names, "yes", "no")) %>% 
   ggplot(aes(x=review_stats_all_average_score, y = review_stats_dave_average_score, label=name))+
-  geom_point()+
+  geom_point(aes(color=top_ten))+
   geom_smooth(method = "lm", se = FALSE)+
   theme_minimal()
 
@@ -289,9 +299,10 @@ ggplotly(a)
 
 
 b<-pizza_barstool %>% 
+  mutate(top_ten = ifelse(name %in% pizza_names, "yes", "no")) %>% 
   filter(review_stats_all_average_score!=0, review_stats_community_average_score!=0) %>% 
   ggplot(aes(x=review_stats_all_average_score, y = review_stats_community_average_score, label=name))+
-  geom_point()+
+  geom_point(aes(color=top_ten))+
   geom_smooth(method = "lm", se = FALSE)+
   theme_minimal()
 
