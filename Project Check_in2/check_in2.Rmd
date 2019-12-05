@@ -299,8 +299,8 @@ ggplotly(a)
 
 b<-pizza_barstool %>% 
   mutate(top_ten = ifelse(name %in% pizza_names, "yes", "no")) %>% 
-  filter(review_stats_all_average_score!=0, review_stats_community_average_score!=0) %>% 
-  ggplot(aes(x=review_stats_all_average_score, y = review_stats_community_average_score, label=name))+
+  filter(review_stats_dave_average_score!=0, review_stats_community_average_score!=0) %>% 
+  ggplot(aes(x=review_stats_dave_average_score, y = review_stats_community_average_score, label=name))+
   geom_point(aes(color=top_ten))+
   geom_smooth(method = "lm", se = FALSE)+
   theme_minimal()
