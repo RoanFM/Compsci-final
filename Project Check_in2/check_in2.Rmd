@@ -287,7 +287,6 @@ a<-pizza_barstool %>%
 ggplotly(a)
 
 
-
 b<-pizza_barstool %>% 
   filter(review_stats_all_average_score!=0, review_stats_community_average_score!=0) %>% 
   ggplot(aes(x=review_stats_all_average_score, y = review_stats_community_average_score, label=name))+
