@@ -39,13 +39,14 @@ pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatas
 ### **Introduction**
 
 #### Our goal is to help people find the best pizza in New York, depending on their location in the city, price range, and kind of pizzeria they are looking for. To do this, we used three datasets from the TidyTuesday Pizza Party set. We used a dataset from DataFiniti which provides use with geographic data of over 10000 pizza places. 
+
 ```{r}
 leaflet(data=pizza_datafiniti) %>% 
   addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
-  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
+  addCircleMarkers(lngs = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
 ```
 
-### As this dataset shows that New York city 
+### As this dataset shows that New York city has the most pizza 
 
 ```{r}
 pizza_datafiniti %>% 
