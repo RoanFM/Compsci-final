@@ -311,8 +311,6 @@ b<-pizza_barstool %>%
 ggplotly(b)
 
 
-
-
 ```
 
 

@@ -46,7 +46,7 @@ leaflet(data=pizza_datafiniti) %>%
   addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
 ```
 
-### As this dataset shows that New York city has the most pizza(not include Brokklyn), we would like to use pizzeria in New York City to do our research.
+### As this dataset shows that New York city has the most pizza(not include Brokklyn), using pizzateria places in New York City will be more meaningful.
 
 ```{r}
 pizza_datafiniti %>% 
@@ -66,6 +66,22 @@ pizza_datafiniti %>%
 
 #### We then crossed this against two datasets which included ratings, one by Jared Lander which has ratings from New York locals, and one from the Barstool Sports magazines which covers pizzerias across the nation but only has ratings from Barstool employees. 
 
+```{r, results='hide'}
+pizza_barstool %>% 
+  filter(city == c("New York", "Brooklyn", "Minneapolis", "Boston")) %>% 
+  ggplot(aes(x=review_stats_all_average_score))+
+  geom_histogram(aes(fill = city))+
+  theme_minimal()+
+  facet_wrap(~city)+
+  theme(legend.position="none")+
+  labs(title = "Average Rating Scores")+
+  xlim(0,10)+
+  xlab("Average Review Rating Score")
+```
+
+#### This plot implies that we have more significant distrubution for the average rating socre in New York. This is also the reason why we choose to use pizzeria in NYC 
+
+
 ### **Analysis**
 
 #### We have different methods for pizza ratings, so we would like to analyze the differences similarities between each mathed first. 
@@ -83,6 +99,8 @@ pizza_barstool %>%
   theme(legend.position="none")+
   labs(title = "Average Rating Scores")
 ```
+
+#### Overall, the average scores distributions of all reviews, the community rating, and the Dave rating are similar but still exist differences.
 
 
 
