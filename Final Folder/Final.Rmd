@@ -1,0 +1,79 @@
+---
+title: "Pizza Party"
+author: "Charles Zhang, Roan Floer-Martinez, Xi Feng, Jinghan Zhou"
+output: 
+  html_document:
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r message=FALSE}
+library(readr)
+library(tidyverse)
+library(lubridate)
+library(skimr) 
+library(naniar) 
+library(ggmap)
+library(gplots) 
+library(RColorBrewer) 
+library(sf) 
+library(leaflet)
+library(formattable)
+library(shiny)
+library(plotly)
+```
+
+```{r}
+# Read Data
+pizza_jared <- readr::read_csv("https://raw.githubusercontent.com/RoanFM/Compsci-final/master/Data/pizza_jared.csv") %>% 
+  unique() 
+pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_barstool.csv") %>% 
+  unique()
+pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_datafiniti.csv") %>% 
+  unique()
+```
+
+### **Introduction**
+
+#### Our goal is to help people find the best pizza in New York, depending on their location in the city, price range, and kind of pizzeria they are looking for. To do this, we used three datasets from the TidyTuesday Pizza Party set. We used a dataset from DataFiniti which provides use with geographic data of over 10000 pizza places. 
+```{r}
+leaflet(data=pizza_datafiniti) %>% 
+  addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
+```
+
+### As this dataset shows that New York city 
+
+```{r}
+pizza_datafiniti %>% 
+  group_by(city) %>% 
+  summarise(n = n()) %>%
+  mutate(city = fct_reorder(city, n)) %>% 
+  arrange(desc(n)) %>% 
+  head(10) %>% 
+  ggplot(aes(x=city, y=n,fill=city))+
+  geom_col()+
+  coord_flip()+
+  theme_minimal()+
+  theme(legend.position="none")+
+  ylab("Number of Pizza Places")+
+  labs(title = "Top 10 Cities for Pizza")
+```
+
+#### We then crossed this against two datasets which included ratings, one by Jared Lander which has ratings from New York locals, and one from the Barstool Sports magazines which covers pizzerias across the nation but only has ratings from Barstool employees. 
+
+### **Analysis**
+
+#### We have different methods for pizza ratings, so we would like to analyze the differences similarities between each mathed first. 
+
+
+
+
+
+
+
+
+
