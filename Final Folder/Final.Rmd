@@ -43,7 +43,7 @@ pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatas
 ```{r}
 leaflet(data=pizza_datafiniti) %>% 
   addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
-  addCircleMarkers(lngs = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
 ```
 
 ### As this dataset shows that New York city has the most pizza 
