@@ -70,6 +70,19 @@ pizza_datafiniti %>%
 
 #### We have different methods for pizza ratings, so we would like to analyze the differences similarities between each mathed first. 
 
+```{r, results='hide'}
+pizza_barstool %>% 
+  mutate(community = review_stats_community_average_score, all = review_stats_all_average_score, dave = review_stats_dave_average_score) %>% 
+  select(name, all, community, dave) %>% 
+  pivot_longer(cols = -name, names_to = "category", values_to = "score") %>% 
+  ggplot(aes(x=score))+
+  geom_histogram(aes(fill=category), alpha = 0.4)+
+  geom_density(aes(y=..density..*count, color = category), position='dodge', alpha = 0, size= 1)+
+  theme_minimal()+
+  facet_wrap(~category)+
+  theme(legend.position="none")+
+  labs(title = "Average Rating Scores")
+```
 
 
 
