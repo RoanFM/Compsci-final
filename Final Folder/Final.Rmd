@@ -11,19 +11,19 @@ knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 ```
 
 ```{r message=FALSE}
+library(RColorBrewer)
+library(plotly)
 library(skimr) 
 library(tidyverse)
 library(lubridate)
 library(gplots) 
 library(naniar) 
+library(shiny)
+library(readr)
 library(ggmap)
 library(sf) 
 library(leaflet)
 library(formattable)
-library(shiny)
-library(readr)
-library(RColorBrewer)
-library(plotly)
 ```
 
 ```{r}
