@@ -46,7 +46,7 @@ leaflet(data=pizza_datafiniti) %>%
   addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
 ```
 
-### As this dataset shows that New York city has the most pizza 
+### As this dataset shows that New York city has the most pizza(not include Brokklyn), we would like to use pizzeria in New York City to do our research.
 
 ```{r}
 pizza_datafiniti %>% 
@@ -69,6 +69,8 @@ pizza_datafiniti %>%
 ### **Analysis**
 
 #### We have different methods for pizza ratings, so we would like to analyze the differences similarities between each mathed first. 
+
+
 
 
 
