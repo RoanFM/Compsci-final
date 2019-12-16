@@ -1,6 +1,6 @@
 ---
 title: "Pizza Party"
-author: "Xi Feng, Charles Zhang, Jinghan Zhou, Roan Floer-Martinez "
+author: "Charles Zhang, Jinghan Zhou, Roan Floer-Martinez,Xi Feng"
 output: 
   html_document:
     keep_md: yes
@@ -15,11 +15,11 @@ library(sf)
 library(leaflet)
 library(RColorBrewer)
 library(plotly)
+library(tidyverse)
+library(lubridate)
 library(skimr) 
 library(shiny)
 library(readr)
-library(tidyverse)
-library(lubridate)
 library(gplots) 
 library(ggmap)
 library(naniar) 
@@ -43,7 +43,7 @@ pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatasci
 ```{r}
 leaflet(data=pizza_datafiniti) %>% 
   addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
-  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2)
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2.2)
 ```
 
 ### As this dataset shows that New York city has the most pizza(not include Brokklyn), using pizzateria places in New York City in our research will be meaningful and representative.
