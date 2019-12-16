@@ -46,7 +46,7 @@ leaflet(data=pizza_datafiniti) %>%
   addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2.2)
 ```
 
-### As this dataset shows that New York city has the most pizza(not include Brokklyn), using pizzateria places in New York City in our research will be meaningful and representative.
+#### As this dataset shows that New York city has the most pizza(not include Brokklyn), using pizzateria places in New York City in our research will be meaningful and representative.
 
 ```{r}
 pizza_datafiniti %>% 
@@ -195,9 +195,7 @@ top_ten_excellent_analysis <- top_ten_excellent %>%
 ```
 
 #### Our data came with ratings for various pizza places. We wanted to find the best pizza places in New York based off this. However, we didn't just want to calculate the average rating because we think an extreme rating can be more telling. As a result, we calculated the proportion of all ratings among the overall reviews and sorted by the highest proportion of reviews rating the pizzerias as "excellent". Of those ten, only Little Italy Pizza had reviewers who said they would never go back and four had no "poor" ratings either. Patsy's pizza (which I used to order as a kid!) was the winner with 2/3rds of reviewers calling its pizza "excellent". 
-```{r}
-top_ten_excellent_analysis
-```
+
 ```{r, fig.width=8}
 # Graph
 top_ten_excellent_analysis %>% 
