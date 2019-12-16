@@ -202,12 +202,13 @@ top_ten_excellent_analysis
 top_ten_excellent_analysis %>% 
   ggplot(aes(x=place, y=Proportion, fill=Answers))+
   geom_bar(stat='identity')+
-  scale_fill_manual("legend", values = c("red","salmon","pink","steelblue1","steelblue4"), label = c("Never Again","Poor","Average","Goodd","Excellent"))+
+  scale_fill_manual("legend", values = c("red","salmon","pink","steelblue1","steelblue4"), label = c("Never Again","Poor","Average","Good","Excellent"))+
   theme_classic()+
   theme(axis.text.x = element_text(angle=45, hjust=1))+
   xlab("Place")+
   labs(title = "Evaluation for Top 10 Pizza Place in NYC")+
-  guides(fill=guide_legend(NULL))
+  guides(fill=guide_legend(NULL))+
+  scale_x_discrete(limits=c("Patsy's", "Naples 45", "Tappo", "Bleecker Street Pizza", "Little Italy Pizza", "Artichoke Basille's Pizza", "Spunto", "Gotham Pizza", "5 Boroughs Pizza", "Pizza Bash"))
   
 ```
 
