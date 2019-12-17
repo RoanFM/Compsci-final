@@ -251,7 +251,6 @@ pizza_barstool %>%
   labs(x="Average rating", size="# of review", y="",
        title="Barstool Sports ratings of pizza places",
        subtitle = "only places with at least 50 reviews")+
-  theme(legend.position="none")+
   theme_minimal()
 ```
 
