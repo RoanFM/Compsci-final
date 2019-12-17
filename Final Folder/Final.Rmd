@@ -36,9 +36,11 @@ pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatasci
   unique()
 ```
 
+
+### Introduction
 #### It seems like everyone has a favorite pizzeria. Whether it’s the one that delivers until 2 AM, the one with the best sauce, or the really cheap one down the block, it’s very hard to find a pizzeria that everyone will like. 
-Using some data from TidyTuesday’s Pizza Party dataset, we tried to solve this problem. It contains three datasets, one from DataFiniti which has more than 10,000 pizza places from across the country; one from the Barstool Sports magazine which has price categories, locations, and reviews from Barstool critics and community members; and a dataset from Jared Lander, who surveyed people on New York Pizzerias and asked people to rate them on a six point like scale. We have used all three datasets, and it’s given us a pretty good sense of the best pizza in New York. 
-We started out by mapping the DataFiniti dataset. Obviously it doesn’t include every single pizzeria in the country, and it doesn’t have franchises like Domino’s. However, it shows fairly well where pizza places are concentrated in this country. 
+#### Using some data from TidyTuesday’s Pizza Party dataset, we tried to solve this problem. It contains three datasets, one from DataFiniti which has more than 10,000 pizza places from across the country; one from the Barstool Sports magazine which has price categories, locations, and reviews from Barstool critics and community members; and a dataset from Jared Lander, who surveyed people on New York Pizzerias and asked people to rate them on a six point like scale. We have used all three datasets, and it’s given us a pretty good sense of the best pizza in New York. 
+#### We started out by mapping the DataFiniti dataset. Obviously it doesn’t include every single pizzeria in the country, and it doesn’t have franchises like Domino’s. However, it shows fairly well where pizza places are concentrated in this country. 
 
 
 ```{r}
@@ -240,8 +242,18 @@ ggplotly(b)
 
 ```
 
-
-
+```{r}
+pizza_barstool %>% 
+  filter(review_stats_all_count>=50) %>% 
+  mutate(name = fct_reorder(name, review_stats_all_average_score)) %>% 
+  ggplot(aes(review_stats_all_average_score, name, size=review_stats_all_count, name)) +
+  geom_point() +
+  labs(x="Average rating", size="# of review", y="",
+       title="Barstool Sports ratings of pizza places",
+       subtitle = "only places with at least 50 reviews")+
+  theme(legend.position="none")+
+  theme_minimal()
+```
 
 
 
