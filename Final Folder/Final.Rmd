@@ -36,9 +36,10 @@ pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatasci
   unique()
 ```
 
-### **Introduction**
+>It seems like everyone has a favorite pizzeria. Whether it’s the one that delivers until 2 AM, the one with the best sauce, or the really cheap one down the block, it’s very hard to find a pizzeria that everyone will like. 
+Using some data from TidyTuesday’s Pizza Party dataset, we tried to solve this problem. It contains three datasets, one from DataFiniti which has more than 10,000 pizza places from across the country; one from the Barstool Sports magazine which has price categories, locations, and reviews from Barstool critics and community members; and a dataset from Jared Lander, who surveyed people on New York Pizzerias and asked people to rate them on a six point like scale. We have used all three datasets, and it’s given us a pretty good sense of the best pizza in New York. 
+We started out by mapping the DataFiniti dataset. Obviously it doesn’t include every single pizzeria in the country, and it doesn’t have franchises like Domino’s. However, it shows fairly well where pizza places are concentrated in this country. 
 
-#### Our goal is to help people find the best pizza in New York, depending on their location in the city, price range, and kind of pizzeria they are looking for. To do this, we used three datasets from the TidyTuesday Pizza Party set. We used a dataset from DataFiniti which provides use with geographic data of over 10000 pizza places. 
 
 ```{r}
 leaflet(data=pizza_datafiniti) %>% 
@@ -46,7 +47,7 @@ leaflet(data=pizza_datafiniti) %>%
   addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2.2)
 ```
 
-#### As this dataset shows that New York city has the most pizza(not include Brokklyn), using pizzateria places in New York City in our research will be meaningful and representative.
+>Since there is so much regional pride in pizza, and to get a better sense of where pizzerias are concentrated, we then sorted and graphed our cities by the number of pizza places. It’s important to note that, in this dataset, the different boroughs of New York City are considered to be different cities. Regardless, Manhattan has by far the most pizzerias, with nearly 100. Brooklyn comes in second with just over 50, and Chicago and Philadelphia have about 30 each. 
 
 ```{r}
 pizza_datafiniti %>% 
@@ -64,9 +65,7 @@ pizza_datafiniti %>%
   labs(title = "Top 10 Cities for Pizza")
 ```
 
-#### We then crossed this against two datasets which included ratings, one by Jared Lander which has ratings from New York locals, and one from the Barstool Sports magazines which covers pizzerias across the nation but only has ratings from Barstool employees. 
-
-#### Next, we compared the average review socres among NYC, Brooklyn, Boston, and Minneapolis, places that are known for pizza in the Barstool's dataset. 
+>	We then looked at four of the top cities for pizza in the country, Boston, Brooklyn, Chicago, and New York. We compared the average ratings for pizzerias. Most of the cities’ averages were around 6 or 7, except Chicago. I guess not even Chicagoans like Deep Dish! As was expected, New York had by far the most pizzerias. 
 
 ```{r, results='hide'}
 pizza_barstool %>% 
@@ -81,12 +80,7 @@ pizza_barstool %>%
   xlab("Average Review Rating Score")
 ```
 
-#### This plot implies that we have more significant distrubution for the average rating socre in New York. This is also the reason why we choose to use pizzeria in NYC. 
-
-
-### **Analysis**
-
-#### We have different methods for pizza ratings, so we would like to analyze the differences similarities between each mathed first. 
+>Since we have three different rating systems, we wondered if it’s even possible to get a reliable conclusion from them. To check this, we compared the distribution of ratings across the different datasets. All three had an average of roughly 7.5 and very similar bell curve patterns, which shows that there was at least some consistency in the rating scales. 
 
 ```{r, results='hide'}
 pizza_barstool %>% 
@@ -102,7 +96,22 @@ pizza_barstool %>%
   labs(title = "Average Rating Scores")
 ```
 
-#### Overall, the average scores distributions of all reviews, the community rating, and the Dave rating are similar but still exist differences.
+>With that in mind, we tried to find the best pizza in New York. First, we compared Dave’s ratings with the community average across the whole dataset. 
+Then, we looked at Jared’s data to try and find the community’s choice for the best pizza. We think that an extreme response is more meaningful than a simple average of the ratings, so we calculated the proportion of customers who rated the pizza as excellent. The top ten highest proportions ranked as excellent are graphed here.
+
+
+```{r}
+a<-pizza_barstool %>% 
+  #mutate(top_ten = ifelse(name %in% pizza_names, "yes", "no")) %>% 
+  filter(review_stats_dave_average_score!=0, review_stats_community_average_score!=0) %>% 
+  ggplot(aes(x=review_stats_dave_average_score, y = review_stats_community_average_score, label=name))+
+  geom_point()+
+  geom_smooth(method = "lm", se = FALSE)+
+  theme_minimal()
+
+ggplotly(a)
+```
+
 
 ```{r, results='hide'}
 glimpse(pizza_jared)
@@ -211,7 +220,20 @@ top_ten_excellent_analysis %>%
   
 ```
 
+>Then, we combined the final two graphs, which gives us, we think, a good sense of the best pizza in the country. 
 
+```{r}
+b<-pizza_barstool %>% 
+  mutate(top_ten = ifelse(name %in% pizza_names, "yes", "no")) %>% 
+  filter(review_stats_dave_average_score!=0, review_stats_community_average_score!=0) %>% 
+  ggplot(aes(x=review_stats_dave_average_score, y = review_stats_community_average_score, label=name))+
+  geom_point(aes(color=top_ten))+
+  geom_smooth(method = "lm", se = FALSE)+
+  theme_minimal()
+
+ggplotly(b)
+
+```
 
 
 
