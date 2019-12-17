@@ -36,7 +36,7 @@ pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatasci
   unique()
 ```
 
-### **Introduction**
+## **Introduction**
 
 #### Our goal is to help people find the best pizza in New York, depending on their location in the city, price range, and kind of pizzeria they are looking for. To do this, we used three datasets from the TidyTuesday Pizza Party set. We used a dataset from DataFiniti which provides use with geographic data of over 10000 pizza places. 
 
@@ -103,6 +103,8 @@ pizza_barstool %>%
 ```
 
 #### Overall, the average scores distributions of all reviews, the community rating, and the Dave rating are similar but still exist differences.
+
+#### **Our Rating Method**
 
 ```{r, results='hide'}
 glimpse(pizza_jared)
