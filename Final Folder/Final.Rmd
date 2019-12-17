@@ -17,13 +17,13 @@ library(RColorBrewer)
 library(plotly)
 library(tidyverse)
 library(lubridate)
-library(skimr) 
-library(shiny)
-library(readr)
 library(gplots) 
 library(ggmap)
 library(naniar) 
 library(formattable)
+library(skimr) 
+library(shiny)
+library(readr)
 ```
 
 ```{r}
