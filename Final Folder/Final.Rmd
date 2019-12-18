@@ -253,6 +253,43 @@ pizza_barstool %>%
        subtitle = "only places with at least 50 reviews")+
   theme_minimal()
 ```
+```{r}
+pizza_jared<-pizza_jared %>% 
+  # manually set the levels from worst to best, transform them to numbers so that the better rating has a higher numerical score
+  mutate(num_ans = as.numeric(factor(pizza_jared$answer, levels = c("Never Again", "Poor", "Fair", "Average", "Good", "Excellent"))))
+
+pizzas<-pizza_barstool %>% filter(name %in% pizza_jared$place) %>% 
+  select(name, avg_score = review_stats_all_average_score, price_level, city) %>% 
+  filter(!city %in% c("Miami","Santa Monica"))
+
+avg_jared <- pizza_jared %>% select(place, num_ans,answer,votes) %>% 
+  mutate(score=num_ans * votes) %>% 
+  group_by(place) %>% 
+  summarise(tot_score = sum(score),
+            tot_votes = sum(votes)) %>% 
+  ungroup() %>% 
+  filter(tot_votes !=0) %>% 
+  mutate(jared_score = tot_score/tot_votes) %>% 
+  left_join(pizzas, by=c("place" = "name")) %>% 
+  filter(!is.na(avg_score)) %>% 
+  #scale each set of score averages
+  mutate(scale_jared = unlist(as.list(scale(jared_score))), 
+         scale_avg = unlist(as.list(scale(avg_score)))) %>% 
+  unnest() %>% 
+  mutate(image="pz.png")
+
+#create a long data set for the density plot
+pizza_long<-avg_jared %>% 
+  ungroup() %>% 
+  select(place, scale_jared, scale_avg) %>% 
+  gather(key=rater, value=score, 2:3)
+
+ggplot(pizza_long)+
+  geom_density(aes(x=score,fill=rater), alpha=0.3)+
+  scale_fill_manual(labels=c("Barstool", "New York Open\nData Science Meetup"),values=c(scale_avg = "darkgreen", scale_jared = "red"))+
+  labs(title = "New York Open Statistical Programming Meetup Pizza Eaters Have\nSlightly Stronger Opinions Than the Average Barstool Rater", fill = "Rater")+
+  theme(legend.position = "bottom", panel.background = element_blank())
+```
 
 
 
