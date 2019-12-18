@@ -1,6 +1,4 @@
 ---
-title: "Pizza Party"
-author: "Charles Zhang, Jinghan Zhou, Roan Floer-Martinez,Xi Feng"
 output: 
   html_document:
     keep_md: yes
@@ -36,20 +34,28 @@ pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatasci
   unique()
 ```
 
+# **COMP 112 Intro to the Data Science Final Project**
+## **Pizza Party**
+#### Charles Zhang, Jinghan Zhou, Roan Floer-Martinez,Xi Feng
+#### 12/16/2019
 
-### Introduction
-#### It seems like everyone has a favorite pizzeria. Whether it’s the one that delivers until 2 AM, the one with the best sauce, or the really cheap one down the block, it’s very hard to find a pizzeria that everyone will like. 
-#### Using some data from TidyTuesday’s Pizza Party dataset, we tried to solve this problem. It contains three datasets, one from DataFiniti which has more than 10,000 pizza places from across the country; one from the Barstool Sports magazine which has price categories, locations, and reviews from Barstool critics and community members; and a dataset from Jared Lander, who surveyed people on New York Pizzerias and asked people to rate them on a six point like scale. We have used all three datasets, and it’s given us a pretty good sense of the best pizza in New York. 
-#### We started out by mapping the DataFiniti dataset. Obviously it doesn’t include every single pizzeria in the country, and it doesn’t have franchises like Domino’s. However, it shows fairly well where pizza places are concentrated in this country. 
 
+### **Introduction**
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It seems like everyone has a favorite pizzeria. Whether it’s the one that delivers until 2 AM, the one with the best sauce, or the really cheap one down the block, it’s very hard to find a pizzeria that everyone will like. Using some data from TidyTuesday’s Pizza Party dataset, we tried to solve this problem. It contains three datasets, one from DataFiniti which has more than 10,000 pizza places from across the country; one from the Barstool Sports magazine which has price categories, locations, and reviews from Barstool critics and community members; and a dataset from Jared Lander, who surveyed people on New York Pizzerias and asked people to rate them on a six point like scale. We have used all three datasets, and it’s given us a pretty good sense of the best pizza in New York. We started out by mapping the DataFiniti dataset. Obviously it doesn’t include every single pizzeria in the country, and it doesn’t have franchises like Domino’s. However, it shows fairly well where pizza places are concentrated in this country. 
+
+</br>
 
 ```{r}
 leaflet(data=pizza_datafiniti) %>% 
   addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
-  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2.2)
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, color = "red", label=~name,stroke = FALSE, fillOpacity = 0.5, radius = 2.2) 
 ```
 
-#### Since there is so much regional pride in pizza, and to get a better sense of where pizzerias are concentrated, we then sorted and graphed our cities by the number of pizza places. It’s important to note that, in this dataset, the different boroughs of New York City are considered to be different cities. Regardless, Manhattan has by far the most pizzerias, with nearly 100. Brooklyn comes in second with just over 50, and Chicago and Philadelphia have about 30 each. 
+</br>
+
+### **Data Exploration**
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since there is so much regional pride in pizza, and to get a better sense of where pizzerias are concentrated, we then sorted and graphed our cities by the number of pizza places. It’s important to note that, in this dataset, the different boroughs of New York City are considered to be different cities. Regardless, Manhattan has by far the most pizzerias, with nearly 100. Brooklyn comes in second with just over 50, and Chicago and Philadelphia have about 30 each. 
 
 ```{r}
 pizza_datafiniti %>% 
@@ -67,7 +73,7 @@ pizza_datafiniti %>%
   labs(title = "Top 10 Cities for Pizza")
 ```
 
-####	We then looked at four of the top cities for pizza in the country, Boston, Brooklyn, Chicago, and New York. We compared the average ratings for pizzerias. Most of the cities’ averages were around 6 or 7, except Chicago. I guess not even Chicagoans like Deep Dish! As was expected, New York had by far the most pizzerias. 
+####	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We then looked at four of the top cities for pizza in the country, Boston, Brooklyn, Chicago, and New York. We compared the average ratings for pizzerias. Most of the cities’ averages were around 6 or 7, except Chicago. I guess not even Chicagoans like Deep Dish! As was expected, New York had by far the most pizzerias. 
 
 ```{r, results='hide'}
 pizza_barstool %>% 
@@ -82,7 +88,9 @@ pizza_barstool %>%
   xlab("Average Review Rating Score")
 ```
 
-#### Since we have three different rating systems, we wondered if it’s even possible to get a reliable conclusion from them. To check this, we compared the distribution of ratings across the different datasets. All three had an average of roughly 7.5 and very similar bell curve patterns, which shows that there was at least some consistency in the rating scales. 
+### **Rating Methods Comparison**
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since we have three different rating systems, we wondered if it’s even possible to get a reliable conclusion from them. To check this, we compared the distribution of ratings across the different datasets. All three had an average of roughly 7.5 and very similar bell curve patterns, which shows that there was at least some consistency in the rating scales. 
 
 ```{r, results='hide'}
 pizza_barstool %>% 
@@ -98,22 +106,81 @@ pizza_barstool %>%
   labs(title = "Average Rating Scores")
 ```
 
-#### With that in mind, we tried to find the best pizza in New York. First, we compared Dave’s ratings with the community average across the whole dataset. 
-Then, we looked at Jared’s data to try and find the community’s choice for the best pizza. We think that an extreme response is more meaningful than a simple average of the ratings, so we calculated the proportion of customers who rated the pizza as excellent. The top ten highest proportions ranked as excellent are graphed here.
-
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; With that in mind, we tried to find the best pizza in New York. First, we compared Dave’s ratings with the community average across the whole dataset. 
 
 ```{r}
 a<-pizza_barstool %>% 
   #mutate(top_ten = ifelse(name %in% pizza_names, "yes", "no")) %>% 
   filter(review_stats_dave_average_score!=0, review_stats_community_average_score!=0) %>% 
-  ggplot(aes(x=review_stats_dave_average_score, y = review_stats_community_average_score, label=name))+
+  ggplot(aes(y=review_stats_dave_average_score, x = review_stats_community_average_score, label=name))+
   geom_point()+
   geom_smooth(method = "lm", se = FALSE)+
+  labs(x="community score", y="Dave score")+
   theme_minimal()
 
 ggplotly(a)
 ```
 
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; From this graph above it seems like community and Dave average rating scores have some differences rating pizza places. However, we considered that the number of reviewers might influence the final results. Therefore, we filtered the community scores which at leaste have 50 reviewers, then the relationship between Dave rating score and community score we get is very close. 
+
+```{r}
+pizza_cleaned <- pizza_barstool %>% 
+  select(place=name,
+         price_level, 
+         contains("review")) %>% 
+  # cleaning column names
+  rename_all(~str_remove(., "review_stats_")) %>% 
+  select(-contains("provider"))
+
+pizza_cleaned %>% 
+  filter( community_count >=20 ) %>% 
+  ggplot(aes(community_average_score, dave_average_score)) +
+  geom_point(aes( size=community_count)) +
+  geom_abline(color="red", linetype="dashed") +
+  geom_smooth(method="lm") +
+  labs(size="number of community reviews", x="community score", y="Dave score")+
+  theme_minimal()
+```
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We then wondered how much difference there was between the barstool raters and the community raters. we filtered the Barstool data to include only those pizzerias that are present in the Jared set. Due to common pizzeria names, we also filterd out non-New York cities. Since The Jared pizza poll uses a 6 point likert scale: Excellent, Good, Average, Poor, Fair, and Never Again, which captures the response as a string, so we first transformedd the factors to a numerical scale. Then we normalized the data by centering and scaling each data set’s review scores, showing below. We get that csommunity members on the whole tended to rate pizza more harshly, and we considered this in our final analysis. 
+
+```{r}
+pizza_jared<-pizza_jared %>% 
+  # manually set the levels from worst to best, transform them to numbers so that the better rating has a higher numerical score
+  mutate(num_ans = as.numeric(factor(pizza_jared$answer, levels = c("Never Again", "Poor", "Fair", "Average", "Good", "Excellent"))))
+
+pizzas<-pizza_barstool %>% filter(name %in% pizza_jared$place) %>% 
+  select(name, avg_score = review_stats_all_average_score, price_level, city) %>% 
+  filter(!city %in% c("Miami","Santa Monica"))
+
+avg_jared <- pizza_jared %>% select(place, num_ans,answer,votes) %>% 
+  mutate(score=num_ans * votes) %>% 
+  group_by(place) %>% 
+  summarise(tot_score = sum(score),
+            tot_votes = sum(votes)) %>% 
+  ungroup() %>% 
+  filter(tot_votes !=0) %>% 
+  mutate(jared_score = tot_score/tot_votes) %>% 
+  left_join(pizzas, by=c("place" = "name")) %>% 
+  filter(!is.na(avg_score)) %>% 
+  #scale each set of score averages
+  mutate(scale_jared = unlist(as.list(scale(jared_score))), 
+         scale_avg = unlist(as.list(scale(avg_score)))) %>% 
+  unnest() %>% 
+  mutate(image="pz.png")
+
+#create a long data set for the density plot
+pizza_long<-avg_jared %>% 
+  ungroup() %>% 
+  select(place, scale_jared, scale_avg) %>% 
+  gather(key=rater, value=score, 2:3)
+
+ggplot(pizza_long)+
+  geom_density(aes(x=score,fill=rater), alpha=0.3)+
+  scale_fill_manual(labels=c("Barstool", "New York Open\nData Science Meetup"),values=c(scale_avg = "darkgreen", scale_jared = "red"))+
+  labs(title = "New York Open Statistical Programming Meetup Pizza Eaters Have\nSlightly Stronger Opinions Than the Average Barstool Rater", fill = "Rater")+
+  theme(legend.position = "bottom", panel.background = element_blank())
+```
 
 ```{r, results='hide'}
 glimpse(pizza_jared)
@@ -205,7 +272,9 @@ top_ten_excellent_analysis <- top_ten_excellent %>%
 
 ```
 
-#### Our data came with ratings for various pizza places. We wanted to find the best pizza places in New York based off this. However, we didn't just want to calculate the average rating because we think an extreme rating can be more telling. As a result, we calculated the proportion of all ratings among the overall reviews and sorted by the highest proportion of reviews rating the pizzerias as "excellent". Of those ten, only Little Italy Pizza had reviewers who said they would never go back and four had no "poor" ratings either. Patsy's pizza (which I used to order as a kid!) was the winner with 2/3rds of reviewers calling its pizza "excellent". 
+### **Results**
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Our data came with ratings for various pizza places. We wanted to find the best pizza places in New York based off this. However, we didn't just want to calculate the average rating because we think an extreme rating can be more telling. As a result, we calculated the proportion of all ratings among the overall reviews and sorted by the highest proportion of reviews rating the pizzerias as "excellent". Of those ten, only Little Italy Pizza had reviewers who said they would never go back and four had no "poor" ratings either. Patsy's pizza was the winner with 2/3rds of reviewers calling its pizza "excellent". 
 
 ```{r, fig.width=8}
 # Graph
@@ -222,7 +291,7 @@ top_ten_excellent_analysis %>%
   
 ```
 
-#### Then, we combined the final two graphs, which gives us, we think, a good sense of the best pizza in the country. 
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Then, we combined two graphs, which gives us, we think, a good sense of the best pizza in the country. 
 
 ```{r}
 pizza_names <-
@@ -242,6 +311,8 @@ ggplotly(b)
 
 ```
 
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moreover, these graph is helpful, but they do tell us how many people rated a certain pizzeria. Without a doubt, it is important to consider the number of ratings a place received in considering how accurate a rating is. To account for this, we graphed the restaurants in the barstool dataset and sized their points by the number of ratings. This helps argue the objectivity of any single rating. 
+
 ```{r}
 pizza_barstool %>% 
   filter(review_stats_all_count>=50) %>% 
@@ -253,43 +324,29 @@ pizza_barstool %>%
        subtitle = "only places with at least 50 reviews")+
   theme_minimal()
 ```
-```{r}
-pizza_jared<-pizza_jared %>% 
-  # manually set the levels from worst to best, transform them to numbers so that the better rating has a higher numerical score
-  mutate(num_ans = as.numeric(factor(pizza_jared$answer, levels = c("Never Again", "Poor", "Fair", "Average", "Good", "Excellent"))))
 
-pizzas<-pizza_barstool %>% filter(name %in% pizza_jared$place) %>% 
-  select(name, avg_score = review_stats_all_average_score, price_level, city) %>% 
-  filter(!city %in% c("Miami","Santa Monica"))
 
-avg_jared <- pizza_jared %>% select(place, num_ans,answer,votes) %>% 
-  mutate(score=num_ans * votes) %>% 
-  group_by(place) %>% 
-  summarise(tot_score = sum(score),
-            tot_votes = sum(votes)) %>% 
-  ungroup() %>% 
-  filter(tot_votes !=0) %>% 
-  mutate(jared_score = tot_score/tot_votes) %>% 
-  left_join(pizzas, by=c("place" = "name")) %>% 
-  filter(!is.na(avg_score)) %>% 
-  #scale each set of score averages
-  mutate(scale_jared = unlist(as.list(scale(jared_score))), 
-         scale_avg = unlist(as.list(scale(avg_score)))) %>% 
-  unnest() %>% 
-  mutate(image="pz.png")
+### **Challenges and Further Study**
+- Datasets don’t always overlap
+- Ratings are inherently subjective
+- Pizzerias open and close all the time
+- How do you account for different regional styles of pizza?
+- Only one dataset contains information on prices
 
-#create a long data set for the density plot
-pizza_long<-avg_jared %>% 
-  ungroup() %>% 
-  select(place, scale_jared, scale_avg) %>% 
-  gather(key=rater, value=score, 2:3)
+### **Reference**
 
-ggplot(pizza_long)+
-  geom_density(aes(x=score,fill=rater), alpha=0.3)+
-  scale_fill_manual(labels=c("Barstool", "New York Open\nData Science Meetup"),values=c(scale_avg = "darkgreen", scale_jared = "red"))+
-  labs(title = "New York Open Statistical Programming Meetup Pizza Eaters Have\nSlightly Stronger Opinions Than the Average Barstool Rater", fill = "Rater")+
-  theme(legend.position = "bottom", panel.background = element_blank())
-```
+Richards, Tyler, [*Adventures in Barstool’s Pizza Data*](https://towardsdatascience.com/adventures-in-barstools-pizza-data-9b8ae6bb6cd1
+), May 11, 2019
+
+Lander, Jared, [*Jared Data Set*](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-10-01)
+
+
+</br>
+</br>
+</br>
+
+
+
 
 
 
